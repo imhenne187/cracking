@@ -5,12 +5,14 @@ by Henne
 local spoofedUsername = "gorgeportabes"
 local Players = game:GetService("Players")
 local lp = Players.LocalPlayer
-
+local spoofedUserid = ""
 local gameMT = getrawmetatable(game)
 setreadonly(gameMT, false)
 local oldGameIndex = gameMT.__index
 
 gameMT.__index = newcclosure(function(t, k)
+    if t == lp and (k == "UserId") then
+        return spoofedUserid
     if t == lp and (k == "Name" or k == "Username") then
         return spoofedUsername
     end
